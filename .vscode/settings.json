@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "gd32f4xx_timer.h": "c",
+        "rc522.h": "c",
+        "systick.h": "c",
+        "485port.h": "c"
+    }
+}
