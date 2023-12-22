@@ -221,16 +221,14 @@ void PcdAntennaOff ( void )
  */
 void PCD_Reset(void)
 {
-    //将RST引脚置高，使RC522退出复位状态
+    /*硬件复位RC522*/
     Reset_Disable();
     delay_1us(1);
-    //这里目的是产生一个1us的方波，硬件复位RC522
     Reset_Enable();
     delay_1us(1);
     Reset_Disable();
     delay_1us(1);
-    //对CommandReg写命令，即按照宏定义中的命令字，修改CommandReg的低四位
-    //软件复位RC522
+    /*软件复位RC522*/
     WriteRawRC(CommandReg,0x0F);
     //CommandReg的bit4为PowerDown,逻辑0表示RC522已准备好运行，逻辑1表示进入软掉电模式
     while(ReadRawRC(CommandReg)&0x10);
@@ -262,29 +260,19 @@ void PCD_Reset(void)
  */
 void M500PcdConfigISOType(uint8_t ucType)
 {
-	if (ucType == 'A')                     //ISO14443_A
+	if (ucType == 'A')//A卡
     {
 		ClearBitMask ( Status2Reg, 0x08 );
-
         WriteRawRC ( ModeReg, 0x3D );//3F
-		
 		WriteRawRC ( RxSelReg, 0x86 );//84
-		
-		WriteRawRC( RFCfgReg, 0x7F );   //4F
-		
+		WriteRawRC( RFCfgReg, 0x7F ); //4F
 		WriteRawRC( TReloadRegL, 30 );//tmoLength);// TReloadVal = 'h6a =tmoLength(dec) 
-		
 		WriteRawRC ( TReloadRegH, 0 );
-		
 		WriteRawRC ( TModeReg, 0x8D );
-		
 		WriteRawRC ( TPrescalerReg, 0x3E );
-		
 		delay_1us(2);
-	
 		PcdAntennaOn ();//开天线
     }
- 
 }
 
 /**
@@ -408,7 +396,7 @@ char PcdRequest(uint8_t ucReq_code,uint8_t * pTagType)
     char cStatus;
     uint8_t ucComMF522Buf[MAXRLEN];
     uint32_t ulLen;
-    ClearBitMask(Status2Reg,0x08);	//将MIFARECyptol清零
+    ClearBitMask(Status2Reg,0x08);	//将MIFARECyptol清零，不加密
     WriteRawRC(BitFramingReg,0x07);	//发送的最后一个字节的七位
     SetBitMask(TxControlReg,0x03);	//TX1,TX2管脚的输出信号传递经发送调制的13.56的能量载波信号
  

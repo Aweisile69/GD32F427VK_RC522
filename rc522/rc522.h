@@ -2,7 +2,7 @@
  * @author: WangQiWei
  * @Date: 2023-12-04 08:42:52
  * @LastEditors: WangQiWei
- * @LastEditTime: 2023-12-06 15:36:23
+ * @LastEditTime: 2023-12-22 15:57:53
  */
 #ifndef __RC522_H__
 #define __RC522_H__
@@ -124,16 +124,15 @@
 #define ADDMONEY	0xa4
 
 void RC522_Handel(void);
-void RC522_Init( void );                       //初始化
-void PCD_Reset( void );                       //复位
-void M500PcdConfigISOType( uint8_t type );                    //工作方式
+void RC522_Init( void );//初始化
+void PCD_Reset( void );//复位
+void M500PcdConfigISOType( uint8_t type );//工作方式
 char PcdRequest( uint8_t req_code, uint8_t * pTagType ); //寻卡
-char PcdAnticoll( uint8_t * pSnr);                   //读卡号
+char PcdAnticoll( uint8_t * pSnr);//读卡号
 char PcdSelect( uint8_t * pSnr );
 char PcdAuthState( uint8_t ucAuth_mode, uint8_t ucAddr, uint8_t * pKey, uint8_t * pSnr );
 char PcdWrite( uint8_t ucAddr, uint8_t * pData );
 char PcdRead( uint8_t ucAddr, uint8_t * pData );
-//void ShowID(uint8_t *p);	 //显示卡的卡号，以十六进制显示
 
 extern unsigned char buf1[16];
 extern unsigned char buf2[16]; 
