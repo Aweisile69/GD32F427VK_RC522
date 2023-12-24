@@ -1,0 +1,114 @@
+project:
+  packs:
+    - pack: GigaDevice::GD32F4xx_DFP
+  setups:
+    - setup: Options for gd32f4
+      processor:
+        trustzone: non-secure
+      add-path:
+        - ../application
+        - ../library/include
+        - ../start
+        - ../rc522
+      debug: "on"
+      misc:
+        - C:
+            - -std=c99
+          C-CPP:
+            - -fno-rtti
+            - -funsigned-char
+            - -fshort-enums
+            - -fshort-wchar
+            - -ffunction-sections
+            - -Wno-packed
+            - -Wno-missing-variable-declarations
+            - -Wno-missing-prototypes
+            - -Wno-missing-noreturn
+            - -Wno-sign-conversion
+            - -Wno-nonportable-include-path
+            - -Wno-reserved-id-macro
+            - -Wno-unused-macros
+            - -Wno-documentation-unknown-command
+            - -Wno-documentation
+            - -Wno-license-management
+            - -Wno-parentheses-equality
+          CPP:
+            - -xc++
+            - -std=c++11
+          ASM:
+            - -masm=auto
+          Link:
+            - --map
+            - --load_addr_map_info
+            - --xref
+            - --callgraph
+            - --symbols
+            - --info sizes
+            - --info totals
+            - --info unused
+            - --info veneers
+            - --strict
+            - --summary_stderr
+            - --info summarysizes
+  linker:
+    - script: gd32f4_gd32f4.sct
+  groups:
+    - group: application
+      files:
+        - file: ../application/main.c
+        - file: ../application/gd32f4xx_it.c
+        - file: ../application/gd32f4xx_it.h
+    - group: library
+      files:
+        - file: ../library/source/gd32f4xx_adc.c
+        - file: ../library/source/gd32f4xx_can.c
+        - file: ../library/source/gd32f4xx_crc.c
+        - file: ../library/source/gd32f4xx_ctc.c
+        - file: ../library/source/gd32f4xx_dac.c
+        - file: ../library/source/gd32f4xx_dbg.c
+        - file: ../library/source/gd32f4xx_dci.c
+        - file: ../library/source/gd32f4xx_dma.c
+        - file: ../library/source/gd32f4xx_enet.c
+        - file: ../library/source/gd32f4xx_exmc.c
+        - file: ../library/source/gd32f4xx_exti.c
+        - file: ../library/source/gd32f4xx_fmc.c
+        - file: ../library/source/gd32f4xx_fwdgt.c
+        - file: ../library/source/gd32f4xx_gpio.c
+        - file: ../library/source/gd32f4xx_i2c.c
+        - file: ../library/source/gd32f4xx_ipa.c
+        - file: ../library/source/gd32f4xx_iref.c
+        - file: ../library/source/gd32f4xx_misc.c
+        - file: ../library/source/gd32f4xx_pmu.c
+        - file: ../library/source/gd32f4xx_rcu.c
+        - file: ../library/source/gd32f4xx_rtc.c
+        - file: ../library/source/gd32f4xx_sdio.c
+        - file: ../library/source/gd32f4xx_spi.c
+        - file: ../library/source/gd32f4xx_syscfg.c
+        - file: ../library/source/gd32f4xx_timer.c
+        - file: ../library/source/gd32f4xx_tli.c
+        - file: ../library/source/gd32f4xx_trng.c
+        - file: ../library/source/gd32f4xx_usart.c
+        - file: ../library/source/gd32f4xx_wwdgt.c
+    - group: start
+      files:
+        - file: ../start/core_cm4.h
+        - file: ../start/core_cm4_simd.h
+        - file: ../start/core_cmInstr.h
+        - file: ../start/core_cmFunc.h
+        - file: ../start/startup_gd32f407_427.s
+        - file: ../start/system_gd32f4xx.h
+        - file: ../start/system_gd32f4xx.c
+        - file: ../application/gd32f4xx_libopt.h
+        - file: ../start/gd32f4xx.h
+    - group: rc522
+      files:
+        - file: ../rc522/hw_spi.c
+        - file: ../rc522/hw_spi.h
+        - file: ../rc522/my_uart.c
+        - file: ../rc522/my_uart.h
+        - file: ../rc522/rc522.c
+        - file: ../rc522/rc522.h
+        - file: ../rc522/systick.c
+        - file: ../rc522/systick.h
+        - file: ../rc522/485Port.c
+        - file: ../rc522/485Port.h

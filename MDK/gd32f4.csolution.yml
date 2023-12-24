@@ -1,0 +1,10 @@
+solution:
+  created-by: uv2csolution@1.2.0
+  created-for: CMSIS-Toolbox@2.0.0
+  compiler: AC6@6.21.0
+  target-types:
+    - type: gd32f4
+      device: GD32F427VK
+      optimize: none
+  projects:
+    - project: gd32f4.cproject.yml
