@@ -229,28 +229,20 @@ void PCD_Reset(void)
     Reset_Disable();
     delay_1us(1);
     /*软件复位RC522*/
-    WriteRawRC(CommandReg,0x0F);
-    //CommandReg的bit4为PowerDown,逻辑0表示RC522已准备好运行，逻辑1表示进入软掉电模式
+    WriteRawRC(CommandReg,PCD_RESETPHASE);
+    /**读CommandReg的bit4
+     * 该位为PowerDown
+     * 逻辑0表示RC522已准备好运行
+     * 逻辑1表示进入软掉电模式即未准备好运行
+     */
     while(ReadRawRC(CommandReg)&0x10);
     delay_1us(1);
-    // uart_TransmitByte(ReadRawRC(ModeReg));
-    WriteRawRC(ModeReg,0x3D);            //定义发送和接收常用模式 和Mifare卡通讯，CRC初始值0x6363
-    // uart_TransmitByte(ReadRawRC(ModeReg));
-    // uart_TransmitByte(ReadRawRC(TReloadRegL));
-    WriteRawRC(TReloadRegL,30);          //16位定时器低位    
-    // uart_TransmitByte(ReadRawRC(TReloadRegL));
-    // uart_TransmitByte(ReadRawRC(TReloadRegH));
-    WriteRawRC(TReloadRegH,0);			     //16位定时器高位
-    // uart_TransmitByte(ReadRawRC(TReloadRegH));
-    // uart_TransmitByte(ReadRawRC(TModeReg));
-    WriteRawRC(TModeReg,0x8D);				   //定义内部定时器的设置
-    // uart_TransmitByte(ReadRawRC(TModeReg));
-    // uart_TransmitByte(ReadRawRC(TPrescalerReg));
-    WriteRawRC(TPrescalerReg,0x3E);			 //设置定时器分频系数
-    // uart_TransmitByte(ReadRawRC(TPrescalerReg));
-    // uart_TransmitByte(ReadRawRC(TxAutoReg));
-    WriteRawRC(TxAutoReg,0x40);				   //调制发送信号为100%ASK	
-    // uart_TransmitByte(ReadRawRC(TxAutoReg));
+    WriteRawRC(ModeReg,0x3D);           //定义发送和接收常用模式和Mifare卡通讯，CRC初始值0x6363
+    WriteRawRC(TReloadRegL,30);         //16位定时器低位    
+    WriteRawRC(TReloadRegH,0);			//16位定时器高位
+    WriteRawRC(TModeReg,0x8D);			//定义内部定时器的设置
+    WriteRawRC(TPrescalerReg,0x3E);	    //设置定时器分频系数
+    WriteRawRC(TxAutoReg,0x40);			//调制发送信号为100%ASK	
 }
 
 /**

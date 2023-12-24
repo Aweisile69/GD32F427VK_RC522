@@ -2,7 +2,7 @@
  * @author: WangQiWei
  * @Date: 2023-12-05 23:51:17
  * @LastEditors: WangQiWei
- * @LastEditTime: 2023-12-21 16:19:48
+ * @LastEditTime: 2023-12-24 17:33:25
  */
 #include "gd32f4xx.h"
 #include "hw_spi.h"
