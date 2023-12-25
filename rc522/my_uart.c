@@ -2,7 +2,7 @@
  * @author: qiwei.wang
  * @Date: 2023-11-27 14:26:03
  * @LastEditors: WangQiWei
- * @LastEditTime: 2023-12-21 15:59:23
+ * @LastEditTime: 2023-12-25 10:51:14
  */
 #include "gd32f4xx.h"
 #include "my_uart.h"
@@ -66,6 +66,7 @@ void uart_TransmitByte(uint8_t byte)
     看数据手册*/
     while(usart_flag_get(USART0, USART_FLAG_TC) == RESET);
 }
+
 
 /**
  * @description: 发送数组

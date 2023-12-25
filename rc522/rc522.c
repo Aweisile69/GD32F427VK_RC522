@@ -256,12 +256,20 @@ void PCD_Reset(void)
      */
     while(ReadRawRC(CommandReg)&0x10);
     delay_1us(1);
+
+
     WriteRawRC(ModeReg,0x3D);           //定义发送和接收常用模式和Mifare卡通讯，CRC初始值0x6363
-    WriteRawRC(TReloadRegL,30);         //16位定时器低位    
+    uart_TransmitByte(ReadRawRC(ModeReg));
+    WriteRawRC(TReloadRegL,30);         //16位定时器低位
+    uart_TransmitByte(ReadRawRC(TReloadRegL));
     WriteRawRC(TReloadRegH,0);			//16位定时器高位
+    uart_TransmitByte(ReadRawRC(TReloadRegH));
     WriteRawRC(TModeReg,0x8D);			//定义内部定时器的设置
+    uart_TransmitByte(ReadRawRC(TModeReg));
     WriteRawRC(TPrescalerReg,0x3E);	    //设置定时器分频系数
+    uart_TransmitByte(ReadRawRC(TPrescalerReg));
     WriteRawRC(TxAutoReg,0x40);			//调制发送信号为100%ASK	
+    uart_TransmitByte(ReadRawRC(TxAutoReg));
 }
 
 /**

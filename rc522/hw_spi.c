@@ -2,7 +2,7 @@
  * @author: WangQiWei
  * @Date: 2023-12-05 23:51:17
  * @LastEditors: WangQiWei
- * @LastEditTime: 2023-12-24 17:33:25
+ * @LastEditTime: 2023-12-25 11:07:29
  */
 #include "gd32f4xx.h"
 #include "hw_spi.h"
@@ -15,25 +15,17 @@ void HardWare_SPI_Init(void)
 {
     /*开启GPIO和SPI的时钟*/
     rcu_periph_clock_enable(RCU_GPIOA);
-    rcu_periph_clock_enable(RCU_GPIOB);
+    //rcu_periph_clock_enable(RCU_GPIOB);
     rcu_periph_clock_enable(RCU_GPIOE);
     rcu_periph_clock_enable(RCU_SPI0);
     /*配置GPIO口*/
+    /*SCK,MISO,MOSI*/
+    gpio_af_set(SCK_PORT,GPIO_AF_5,SCK_PIN|MISO_PIN|MOSI_PIN);
+    gpio_mode_set(SCK_PORT,GPIO_MODE_AF,GPIO_PUPD_NONE,SCK_PIN|MISO_PIN|MOSI_PIN);
+    gpio_output_options_set(SCK_PORT,GPIO_OTYPE_PP,GPIO_OSPEED_50MHZ,SCK_PIN|MISO_PIN|MOSI_PIN);
     /*CS*/
     gpio_mode_set(CS_PORT,GPIO_MODE_OUTPUT,GPIO_PUPD_NONE,CS_PIN);
     gpio_output_options_set(CS_PORT,GPIO_OTYPE_PP,GPIO_OSPEED_50MHZ,CS_PIN);
-    /*SCK*/
-    gpio_af_set(SCK_PORT,GPIO_AF_5,SCK_PIN);
-    gpio_mode_set(SCK_PORT,GPIO_MODE_AF,GPIO_PUPD_NONE,SCK_PIN);
-    gpio_output_options_set(SCK_PORT,GPIO_OTYPE_PP,GPIO_OSPEED_50MHZ,SCK_PIN);
-    /*MOSI*/
-    gpio_af_set(MOSI_PORT,GPIO_AF_5,MOSI_PIN);
-    gpio_mode_set(MOSI_PORT,GPIO_MODE_AF,GPIO_PUPD_NONE,MOSI_PIN);
-    gpio_output_options_set(MOSI_PORT,GPIO_OTYPE_PP,GPIO_OSPEED_50MHZ,MOSI_PIN);
-    /*MISO*/
-    gpio_af_set(MISO_PORT,GPIO_AF_5,MISO_PIN);
-    gpio_mode_set(MISO_PORT,GPIO_MODE_AF,GPIO_PUPD_NONE,MISO_PIN);
-    gpio_output_options_set(MISO_PORT,GPIO_OTYPE_PP,GPIO_OSPEED_50MHZ,MISO_PIN);
     /*RESET*/
     gpio_mode_set(RESET_PORT,GPIO_MODE_OUTPUT,GPIO_PUPD_NONE,RESET_PIN);
     gpio_output_options_set(RESET_PORT,GPIO_OTYPE_PP,GPIO_OSPEED_50MHZ,RESET_PIN);
@@ -44,7 +36,7 @@ void HardWare_SPI_Init(void)
     spi_init_struct.frame_size = SPI_FRAMESIZE_8BIT;
     spi_init_struct.clock_polarity_phase = SPI_CK_PL_LOW_PH_1EDGE;
     spi_init_struct.nss  = SPI_NSS_SOFT;
-    spi_init_struct.prescale = SPI_PSC_64;    //注意这里的预分频系数，如果通信有问题，首先把每个预分频系数都试一遍
+    spi_init_struct.prescale = SPI_PSC_128;    //注意这里的预分频系数，如果通信有问题，首先把每个预分频系数都试一遍
     spi_init_struct.endian = SPI_ENDIAN_MSB;
     /*初始化SPI*/
     spi_init(SPI0, &spi_init_struct);

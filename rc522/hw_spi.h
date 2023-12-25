@@ -2,7 +2,7 @@
  * @author: WangQiWei
  * @Date: 2023-12-05 23:51:36
  * @LastEditors: WangQiWei
- * @LastEditTime: 2023-12-21 17:02:47
+ * @LastEditTime: 2023-12-25 11:02:48
  */
 #ifndef __HW_SPI_H__
 #define __HW_SPI_H__
@@ -13,13 +13,13 @@
 #define CS_PORT             GPIOA
 #define SCK_PORT            GPIOA
 #define MISO_PORT           GPIOA
-#define MOSI_PORT           GPIOB
+#define MOSI_PORT           GPIOA
 #define RESET_PORT          GPIOE
 
 #define CS_PIN              GPIO_PIN_4     
 #define SCK_PIN             GPIO_PIN_5
 #define MISO_PIN            GPIO_PIN_6
-#define MOSI_PIN            GPIO_PIN_5
+#define MOSI_PIN            GPIO_PIN_7
 #define RESET_PIN           GPIO_PIN_10
 
 /*CS和RESET的宏定义*/
