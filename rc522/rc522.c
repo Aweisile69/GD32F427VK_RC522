@@ -48,43 +48,62 @@ char OK_status;
 
 void RC522_Handel(void)
 {
-    uart_printf("寻卡中!\n");
     status = PcdRequest(PICC_REQALL,CT);//寻卡
     
     if(status == MI_OK)//射频范围内有14443 A卡
     {
-        uart_printf("射频范围内有A卡!\n");
+        uart_printf("Request_MI_OK\n");
         status = MI_ERR;//修改标志位，进入下一步防冲撞
         status = PcdAnticoll(SN);//防冲撞
+    }
+    else
+    {
+        uart_printf("Requeset_MI_ERR\n");
     }
 
     if (status == MI_OK)//防冲撞结束
     {
-        uart_printf("防冲撞成功!\n");
+        uart_printf("AntiCollision_MI_OK\n");
         status = MI_ERR;//修改标志位，进入下一步选卡
         status = PcdSelect(SN);//选卡
+    }
+    else
+    {
+        uart_printf("AntiCollision_MI_ERR\n");
     }
 
     if(status == MI_OK)//选卡成功
     {
-        uart_printf("选卡成功!\n");
+        uart_printf("SelectCard_MI_OK\n");
         status = MI_ERR;//修改标志位，进入下一步验证
         status = PcdAuthState(0x60,0x09,KEY,SN);//验证
+    }
+    else
+    {
+        uart_printf("SelectCard_MI_ERR\n");
     }
 
     if(status == MI_OK)//验证成功
     {
-        uart_printf("验证成功!\n");
+        uart_printf("Verify_MI_OK\n");
         status = MI_ERR;
         status = PcdRead(s,RFID);
+    }
+    else
+    {
+        uart_printf("Verify_MI_ERR\n");
     }
  
     if(status == MI_OK)//读卡成功
     {
-        uart_printf("读卡成功!\n");
+        uart_printf("ReadCard_MI_OK\n");
         status = MI_ERR;
         delay_1ms(100);
-    }	
+    }
+    else
+    {
+        uart_printf("ReadCard_MI_ERR\n");
+    }
  
 }
 
